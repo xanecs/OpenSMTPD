@@ -54,3 +54,5 @@ clang-report/
 open.smtpd.cert
 open.smtpd.csr
 open.smtpd.key
+
+.ccls-cache
