@@ -1,26 +1,27 @@
-FROM alpine:3.11 as build
+FROM alpine:3.14 as build
 
 # creates /opensmtpd dir and makes all following commands to run in it
 # https://docs.docker.com/engine/reference/builder/#workdir
 WORKDIR /opensmtpd
 
 # install necessary packages
-RUN apk add --no-cache \
+RUN apk upgrade && apk add --no-cache \
     autoconf \
     automake \
     bison \
     ca-certificates \
-    fts-dev \
+    flex-dev \
     gcc \
-    fts \
+    fts-dev \
     libevent-dev \
     libtool \
-    libtool \
     linux-pam-dev \
+    mandoc \
     make \
+    db-dev \
+    libasr-dev \
+    openssl-dev \
     musl-dev \
-    libressl \
-    libressl-dev \
     zlib-dev
  
 # create users and directories
@@ -48,3 +49,4 @@ RUN ./bootstrap \
   && make install \
   && cp etc/aliases /etc/mail/aliases
 
+ENTRYPOINT ["/usr/local/sbin/smtpd", "-d"]
